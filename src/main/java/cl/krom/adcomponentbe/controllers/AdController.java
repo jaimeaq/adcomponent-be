@@ -1,7 +1,10 @@
 package cl.krom.adcomponentbe.controllers;
 
+import cl.krom.adcomponentbe.dto.ImageDTO;
 import cl.krom.adcomponentbe.entities.Image;
 import cl.krom.adcomponentbe.repositories.ImageRepository;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,16 +21,16 @@ public class AdController {
     }
 
     @GetMapping("ads/{width}/{height}")
-    public String getAd(@PathVariable("width") Integer width,
-                        @PathVariable("height") Integer height) {
+    public ResponseEntity<?> getAd(@PathVariable("width") Integer width,
+                                       @PathVariable("height") Integer height) {
         List<Image> imageList = imageRepository.getByWidthAndHeight(width, height);
 
         if (imageList.isEmpty()) {
-            return "No images found";
+            return ResponseEntity.notFound().build();
         }
 
-        String url = imageList.getFirst().getFilename();
+        String url = "http://localhost:8080/images/" + imageList.getFirst().getFilename();
 
-        return "Here is your ad of " + width + "x" + height + "px, with URL: " + url;
+        return ResponseEntity.ok(new ResponseEntity<>(new ImageDTO(url), HttpStatus.OK));
     }
 }
