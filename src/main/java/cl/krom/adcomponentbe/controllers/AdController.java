@@ -3,18 +3,21 @@ package cl.krom.adcomponentbe.controllers;
 import cl.krom.adcomponentbe.dto.ImageDTO;
 import cl.krom.adcomponentbe.entities.Image;
 import cl.krom.adcomponentbe.repositories.ImageRepository;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Random;
 
 @RestController
+@CrossOrigin("http://localhost:63343")
 public class AdController {
 
     private final ImageRepository imageRepository;
+    private final Random rand = new Random();
 
     public AdController(ImageRepository imageRepository) {
         this.imageRepository = imageRepository;
@@ -29,8 +32,10 @@ public class AdController {
             return ResponseEntity.notFound().build();
         }
 
-        String url = "http://localhost:8080/images/" + imageList.getFirst().getFilename();
+        int imgIndex = rand.nextInt(imageList.size());
 
-        return ResponseEntity.ok(new ResponseEntity<>(new ImageDTO(url), HttpStatus.OK));
+        String url = "http://localhost:8080/images/" + imageList.get(imgIndex).getFilename();
+
+        return ResponseEntity.ok(new ImageDTO(url));
     }
 }
