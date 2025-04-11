@@ -25,7 +25,7 @@ public class ImpressionController {
             Impression impression = new Impression();
 
             impression.setTimestamp(Instant.parse(impressionDTO.getTimestamp()));
-//            impression.setServerTimestamp(Instant.now());
+            impression.setServerTimestamp(Instant.now());
             impression.setImageUrl(impressionDTO.getAdData().getUrl());
             impression.setWidth(impressionDTO.getAdData().getWidth());
             impression.setHeight(impressionDTO.getAdData().getHeight());

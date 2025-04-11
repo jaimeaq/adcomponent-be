@@ -37,4 +37,7 @@ public class Impression {
     @Column(name = "referrer")
     private String referrer;
 
+    @Column(name = "server_timestamp", nullable = false)
+    private Instant serverTimestamp;
+
 }
