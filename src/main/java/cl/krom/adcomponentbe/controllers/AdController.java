@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Random;
 
 @RestController
-@CrossOrigin("http://localhost:63343")
+@CrossOrigin("http://localhost:63342")
 public class AdController {
 
     private final ImageRepository imageRepository;
